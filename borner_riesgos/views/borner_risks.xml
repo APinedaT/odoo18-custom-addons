@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form view -->
+        <record id="risk_borner_form" model="ir.ui.view">
+            <field name="name">risk_borner_form</field>
+            <field name="model">borner.riesgo</field>
+            <field name="arch" type="xml">
+                <form string="Riesgo Borner">
+                    <header>
+                        <button name="set_risk" string="Calcular Riesgo" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" options="{'clickable': True}" statusbar_visible="draft,review,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="date"/>
+                            <field name="provider"/>
+                            <field name="description"/>
+                            <field name="amount"/>
+                            <field name="risk"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view -->
+        <record id="risk_borner_tree" model="ir.ui.view">
+            <field name="name">risk_borner_tree</field>
+            <field name="model">borner.riesgo</field>
+            <field name="arch" type="xml">
+                <list string="Riesgos Borner">
+                    <field name="date"/>
+                    <field name="provider"/>
+                    <field name="description"/>
+                    <field name="amount"/>
+                    <field name="risk"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_borner_risks" model="ir.actions.act_window">
+            <field name="name">Riesgos Borner</field>
+            <field name="res_model">borner.riesgo</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="risk_borner_tree"/>
+        </record>
+
+        <menuitem id="menu_borner_risks_root" name="Riesgos Financieros" sequence="10"/>
+        <menuitem id="menu_id" name="Riesgos" parent="menu_borner_risks_root" sequence="2" action="action_borner_risks"/>
+        
+
+        <!-- Action -->
+        <!-- <record id="action_view_lead_activities" model="ir.actions.act_window">
+            <field name="name">Actividades del Lead</field>
+            <field name="res_model">mail.activity</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('res_model', '=', 'crm.lead'), ('res_id', '=', active_id)]</field>
+            <field name="context">{'default_res_model': 'crm.lead', 'default_res_id': active_id}</field>
+        </record> -->
+
+    </data>
+</odoo>

@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* borner_riesgos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-10 12:41+0000\n"
+"PO-Revision-Date: 2025-11-10 12:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__amount
+msgid "Amount"
+msgstr "Valor"
+
+#. module: borner_riesgos
+#: model:ir.model.fields.selection,name:borner_riesgos.selection__borner_riesgo__state__approved
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: borner_riesgos
+#: model_terms:ir.ui.view,arch_db:borner_riesgos.risk_borner_form
+msgid "Calcular Riesgo"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__description
+msgid "Description"
+msgstr "Concepto"
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields.selection,name:borner_riesgos.selection__borner_riesgo__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__id
+msgid "ID"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__provider
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: borner_riesgos
+#: model_terms:ir.ui.view,arch_db:borner_riesgos.risk_borner_form
+msgid "Riesgo Borner"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.ui.menu,name:borner_riesgos.menu_id
+msgid "Riesgos"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.actions.act_window,name:borner_riesgos.action_borner_risks
+#: model:ir.ui.menu,name:borner_riesgos.menu_borner_risks_root
+#: model_terms:ir.ui.view,arch_db:borner_riesgos.risk_borner_tree
+msgid "Riesgos Borner"
+msgstr ""
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__risk
+msgid "Risk (%)"
+msgstr "Riesgo (%)"
+
+#. module: borner_riesgos
+#: model:ir.model.fields,field_description:borner_riesgos.field_borner_riesgo__state
+msgid "State"
+msgstr "Estado"
+
+#. module: borner_riesgos
+#: model:ir.model.fields.selection,name:borner_riesgos.selection__borner_riesgo__state__review
+msgid "Under Review"
+msgstr "En revision"
+
+#. module: borner_riesgos
+#: model:ir.model,name:borner_riesgos.model_borner_riesgo
+msgid "borner.riesgo"
+msgstr ""
