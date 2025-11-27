@@ -27,8 +27,11 @@ msgstr "Categoria"
 msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
-msgstr La conversión entre unidades de medida solo puede realizarse si pertenecen a la "
-"misma categoría. La conversión se realizará en función de las proporciones.""
+""
+msgstr ""
+"La conversión entre unidades de medida solo puede realizarse si pertenecen a la "
+"misma categoría. La conversión se realizará en función de las proporciones."
+""
 
 #. module: pos_multi_uom_price
 #: model:ir.model.fields,field_description:pos_multi_uom_price.field_product_multi_uom_price__create_uid
