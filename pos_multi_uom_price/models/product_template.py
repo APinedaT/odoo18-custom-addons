@@ -8,3 +8,8 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     multi_uom_price_ids = fields.One2many('product.tmpl.multi.uom.price', 'product_tmpl_id', string='UOM Prices')
+
+    def create(self, vals):
+        product_tmpl = super().create(vals)
+        product_tmpl.multi_uom_price_ids._sync_price_to_variants()
+        return product_tmpl
