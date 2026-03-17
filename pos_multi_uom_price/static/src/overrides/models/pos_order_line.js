@@ -6,7 +6,7 @@ import { PosOrderline } from "@point_of_sale/app/models/pos_order_line";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 import { formatFloat, roundPrecision } from "@web/core/utils/numbers";
-
+import { parseFloat } from "@web/views/fields/parsers";
 
 patch(PosOrderline.prototype, {
     setup() {
