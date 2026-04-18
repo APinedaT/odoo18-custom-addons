@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-information-tag')]"
+               position="after">
+            <t t-if="value.show_qty">
+                <div id="qty_display"
+                    t-attf-class="display_qty #{props.product.qty_available lte 0 ? 'not-available' : ''}">
+                    <t t-out="state.avail_qty"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>

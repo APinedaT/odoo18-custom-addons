@@ -1,0 +1,13 @@
+.display_price{
+       background:rgb(127, 130, 172);
+       position:absolute;
+       top:0;
+       left:40px;
+       height:20px;
+       padding: 0 3px;
+       border-radius: 3px;
+       text-align:center;
+       font-weight: bold;
+       font-size: 14px;
+       color:white
+}
