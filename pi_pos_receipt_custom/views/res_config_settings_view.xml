@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="inherit_pos_config_view_form_quotation" model="ir.ui.view">
+        <field name="name">pos.config.view.form.inherit_quotation</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath  expr="//setting[@id='other_devices']" position="before">
+                <setting string="Pre Imprimir" help="Activar Pre Imprimir para mostrar el botón de pre impresión en la pantalla de punto de venta.">
+                        <field name="iface_printbill"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

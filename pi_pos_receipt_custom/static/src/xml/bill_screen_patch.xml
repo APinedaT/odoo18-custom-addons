@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pi_pos_receipt_custom.BillScreenPatch" t-inherit="pos_restaurant.BillScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('d-flex','w-100','justify-content-start','gap-2')]" position="inside">
+            <div class="button btn btn-lg btn-secondary" t-on-click="downloadImage">
+                <i class="fa fa-download me-1" />
+                Imagen
+            </div>
+        </xpath>
+    </t>
+</templates>
