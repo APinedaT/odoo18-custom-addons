@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Reemplaza el reporte "Invoices" (con pagos) -->
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="report_name">pi_invoice_report_compact_co.report_invoice_document_compact</field>
+            <field name="report_file">pi_invoice_report_compact_co.report_invoice_document_compact</field>
+        </record>
+        <!-- Reemplaza el reporte "Invoices without Payment" -->
+        <record id="account.account_invoices_without_payment" model="ir.actions.report">
+            <field name="report_name">pi_invoice_report_compact_co.report_invoice_document_compact</field>
+            <field name="report_file">pi_invoice_report_compact_co.report_invoice_document_compact</field>
+        </record>
+    </data>
+</odoo>

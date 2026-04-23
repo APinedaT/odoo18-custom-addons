@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_compact">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+                            <!-- ═══════════════════════════════════════════════
+                                 SECCIÓN 1 · ENCABEZADO EI — 3 COLUMNAS
+                            ═══════════════════════════════════════════════ -->
+                            <div class="row mb-2" name="ei_header">
+
+                                <!-- ── Columna izquierda: QR + datos EI de la empresa ── -->
+                                <div class="col-4" name="ei_left">
+                                    <t t-if="o.company_id.ei_enable">
+                                        <div style="font-size:0.78em;line-height:1.4;">
+                                            <div><strong>NIT:</strong> <span t-field="o.company_id.vat"/></div>
+                                            <div><strong>Tipo de organización:</strong> <span t-field="o.company_id.type_organization_id"/></div>
+                                            <div><strong>Tipo de régimen:</strong> <span t-field="o.company_id.type_regime_id"/></div>
+                                            <div><strong>Responsabilidad:</strong> <span t-field="o.company_id.type_liability_id"/></div>
+                                            <div><strong>Tipo de operación:</strong> <span t-field="o.ei_operation"/></div>
+                                            <div t-if="o.company_id.report_custom_text" class="mt-1">
+                                                <span t-field="o.company_id.report_custom_text"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+
+                                <!-- ── Columna central: tipo y número de documento ── -->
+                                <div class="col-4 text-center" name="ei_title">
+                                    <h3 class="mb-1" style="font-size:1em;">
+                                        <t t-if="proforma">PROFORMA — </t>
+                                        <!-- Facturas de venta -->
+                                        <t t-if="o.company_id.ei_enable and o.ei_is_valid and o.move_type == 'out_invoice' and o.state == 'posted'">
+                                            Factura Electrónica de Venta
+                                        </t>
+                                        <t t-elif="o.company_id.ei_enable and not o.ei_is_valid and o.move_type == 'out_invoice' and o.state == 'posted'">
+                                            Factura de Venta
+                                        </t>
+                                        <t t-elif="not o.company_id.ei_enable and o.move_type == 'out_invoice' and o.state == 'posted'">
+                                            Factura
+                                        </t>
+                                        <t t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Borrador de Factura</t>
+                                        <t t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Factura Anulada</t>
+                                        <!-- Notas crédito de venta -->
+                                        <t t-elif="o.company_id.ei_enable and o.ei_is_valid and o.move_type == 'out_refund' and o.state == 'posted'">
+                                            Nota Crédito Electrónica
+                                        </t>
+                                        <t t-elif="o.move_type == 'out_refund' and o.state == 'posted'">Nota Crédito</t>
+                                        <t t-elif="o.move_type == 'out_refund' and o.state == 'draft'">Borrador Nota Crédito</t>
+                                        <t t-elif="o.move_type == 'out_refund' and o.state == 'cancel'">Nota Crédito Anulada</t>
+                                        <!-- Documentos soporte (compras) -->
+                                        <t t-if="o.company_id.ei_enable and o.move_type == 'in_refund' and o.resolution_id and o.resolution_id.resolution_type_document_id.id == 13">
+                                            Nota crédito de documento soporte electrónico
+                                        </t>
+                                        <t t-elif="o.company_id.ei_enable and o.move_type == 'in_refund'">
+                                            Nota Crédito Electrónica de Proveedor
+                                        </t>
+                                        <t t-elif="not o.company_id.ei_enable and o.move_type == 'in_refund'">
+                                            Nota Crédito de Proveedor
+                                        </t>
+                                        <t t-if="o.company_id.ei_enable and o.move_type == 'in_invoice' and o.resolution_id and o.resolution_id.resolution_type_document_id.id == 12">
+                                            Documento soporte electrónico en adquisiciones
+                                        </t>
+                                        <t t-elif="o.company_id.ei_enable and o.move_type == 'in_invoice'">
+                                            Factura Electrónica de Proveedor
+                                        </t>
+                                        <t t-elif="not o.company_id.ei_enable and o.move_type == 'in_invoice'">
+                                            Factura de Proveedor
+                                        </t>
+                                    </h3>
+                                    <h4 t-if="o.name and o.name != '/'" class="mb-1">
+                                        <span t-field="o.name"/>
+                                    </h4>
+                                    <div t-if="o.ei_is_valid and o.ei_qr_data"
+                                         style="display:inline-block;padding:6px;background:#fff;border:1px solid #ddd;border-radius:4px;margin-top:4px;">
+                                        <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.ei_qr_data, 200, 200)"
+                                             style="width:90px;height:90px;display:block;image-rendering:pixelated;"/>
+                                    </div>
+                                </div>
+
+                                <!-- ── Columna derecha: datos del cliente/proveedor ── -->
+                                <div class="col-4" name="ei_partner">
+                                    <h6 class="mb-1">
+                                        <strong t-if="o.move_type in ('out_invoice', 'out_refund')">Cliente:</strong>
+                                        <strong t-if="o.move_type in ('in_invoice', 'in_refund')">Proveedor:</strong>
+                                    </h6>
+                                    <div t-if="o.partner_id.vat" style="font-size:0.82em;">
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'civil_registration'">R.C.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'id_card'">T.I.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'id_document'">C.C.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'national_citizen_id'">C.C.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'residence_document'">T.E.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'foreign_id_card'">C.E.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'rut'">NIT:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'passport'">PAS:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'external_id'">D.I.E.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'diplomatic_card'">Tax ID:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'foreign_colombian_card'">T.E.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'foreign_resident_card'">C.E.:</span>
+                                        <span t-if="o.partner_id.l10n_latam_identification_type_id.l10n_co_document_code == 'niup_id'">NIUP:</span>
+                                        <span t-field="o.partner_id.vat"/>
+                                    </div>
+                                    <address t-field="o.partner_id"
+                                             t-options='{"widget": "contact", "fields": ["address", "name", "phone", "email"], "no_marker": True}'
+                                             style="font-size:0.82em;margin:0;"/>
+                                </div>
+
+                            </div>
+
+                            <!-- ═══════════════════════════════════════════════
+                                 SECCIÓN 2 · FRANJA DE METADATOS
+                            ═══════════════════════════════════════════════ -->
+                            <div class="row border-top border-bottom py-1 mb-2 g-0 align-items-center"
+                                 name="metadata_strip" style="font-size:0.78em;">
+
+                                <div class="col-auto me-3"
+                                     t-if="o.invoice_date and o.company_id.ei_enable and o.move_type in ('out_invoice', 'out_refund')">
+                                    <strong>Fecha emisión:</strong>
+                                    <span t-if="o.ei_issue_datetime" t-field="o.ei_issue_datetime"/>
+                                    <span t-else="" t-field="o.invoice_date"/>
+                                </div>
+                                <div class="col-auto me-3"
+                                     t-if="o.invoice_date and (not o.company_id.ei_enable or o.move_type in ('in_invoice', 'in_refund'))">
+                                    <strong>Fecha:</strong>
+                                    <span t-field="o.invoice_date"/>
+                                </div>
+                                <div class="col-auto me-3"
+                                     t-if="o.company_id.ei_enable and o.ei_expedition_date and o.move_type in ('out_invoice', 'out_refund')">
+                                    <strong>Fecha expedición:</strong>
+                                    <span t-field="o.ei_expedition_date"/>
+                                </div>
+                                <div class="col-auto me-3" t-if="o.invoice_date_due">
+                                    <strong>Vence:</strong>
+                                    <span t-field="o.invoice_date_due"/>
+                                </div>
+                                <div class="col-auto me-3"
+                                     t-if="o.company_id.ei_enable and o.payment_form_id">
+                                    <strong>Forma de pago:</strong>
+                                    <span t-field="o.payment_form_id"/>
+                                </div>
+                                <div class="col-auto me-3"
+                                     t-if="o.company_id.ei_enable and o.payment_method_id">
+                                    <strong>Medio de pago:</strong>
+                                    <span t-field="o.payment_method_id"/>
+                                </div>
+                                <div class="col-auto me-3"
+                                     t-if="o.company_id.ei_enable and o.order_ref_number">
+                                    <strong>Ref. pedido:</strong>
+                                    <span t-field="o.order_ref_number"/>
+                                    <t t-if="o.order_ref_date"> / <span t-field="o.order_ref_date"/></t>
+                                </div>
+                                <div class="col-auto me-3" t-if="o.date_start and o.date_end">
+                                    <strong>Período:</strong>
+                                    <span t-field="o.date_start"/>
+                                    <span> al </span>
+                                    <span t-field="o.date_end"/>
+                                </div>
+
+                            </div>
+
+                            <!-- ═══════════════════════════════════════════════
+                                 SECCIÓN 3 · TABLA DE LÍNEAS
+                            ═══════════════════════════════════════════════ -->
+                            <t t-set="num_item" t-value="0"/>
+                            <table class="table table-sm table-borderless" name="invoice_line_table"
+                                   style="font-size:0.85em;">
+                                <thead class="border-bottom border-top">
+                                    <tr>
+                                        <th class="text-center" style="width:28px;">#</th>
+                                        <th>Descripción</th>
+                                        <th class="text-center" style="width:60px;">Cantidad</th>
+                                        <th class="text-center" style="width:45px;">UdM</th>
+                                        <th class="text-end" style="width:90px;">Precio Unit.</th>
+                                        <th class="text-end" style="width:55px;">Desc.%</th>
+                                        <th class="text-center" style="width:80px;">Impuestos</th>
+                                        <th class="text-end" style="width:90px;">
+                                            Subtotal
+                                            <t t-if="o.company_id.ei_enable and o.is_multicurrency">
+                                                (<span t-field="o.currency_id"/>)
+                                            </t>
+                                        </th>
+                                        <th class="text-end" t-if="o.company_id.ei_enable and o.is_multicurrency"
+                                            style="width:90px;">
+                                            Monto (<span t-field="o.company_currency_id"/>)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <tr class="border-top border-bottom bg-light">
+                                                <td/>
+                                                <td colspan="7"><strong t-field="line.name"/></td>
+                                                <td t-if="o.company_id.ei_enable and o.is_multicurrency"/>
+                                            </tr>
+                                        </t>
+                                        <t t-elif="line.display_type == 'line_note'">
+                                            <tr>
+                                                <td/>
+                                                <td colspan="7" class="text-muted fst-italic">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td t-if="o.company_id.ei_enable and o.is_multicurrency"/>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-set="num_item" t-value="num_item + 1"/>
+                                            <tr>
+                                                <td class="text-center"><span t-esc="num_item"/></td>
+                                                <td>
+                                                    <span t-field="line.name"/>
+                                                    <span t-if="line.product_id.default_code"
+                                                          class="text-muted ms-1" style="font-size:0.9em;">
+                                                        [<span t-field="line.product_id.default_code"/>]
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.quantity"
+                                                          t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.product_uom_id"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.price_unit"
+                                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-if="line.discount" t-field="line.discount"
+                                                          t-options='{"widget": "float", "precision": 2}'/>
+                                                    <span t-else="">—</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <t t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.price_subtotal"
+                                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                                <td class="text-end"
+                                                    t-if="o.company_id.ei_enable and o.is_multicurrency">
+                                                    <span t-esc="abs(line.balance)"
+                                                          t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <!-- ═══════════════════════════════════════════════
+                                 SECCIÓN 4 · TOTALES Y TEXTO DE PAGO
+                            ═══════════════════════════════════════════════ -->
+                            <div class="row mt-2" name="totals_section">
+
+                                <!-- Izquierda: valor en letras, notas -->
+                                <div class="col-6 pe-3" name="left_totals">
+                                    <div t-if="o.value_letters" style="font-size:0.82em;">
+                                        <strong>Valor en letras:</strong><br/>
+                                        <span t-field="o.value_letters"/>
+                                    </div>
+                                    <div t-if="o.company_id.ei_enable" class="mt-1" style="font-size:0.78em;">
+                                        <em>Las retenciones son solo informativas.</em>
+                                    </div>
+                                    <div t-if="o.narration" class="mt-1" style="font-size:0.82em;">
+                                        <strong>Notas:</strong>
+                                        <span t-field="o.narration"/>
+                                    </div>
+                                </div>
+
+                                <!-- Derecha: totales de impuestos -->
+                                <div class="col-6" name="right_totals" style="font-size:0.85em;">
+                                    <div t-if="o.company_id.ei_enable" class="mb-1">
+                                        <strong>Moneda:</strong> <span t-field="o.currency_id"/>
+                                    </div>
+                                    <t t-if="o.tax_totals" t-call="account.document_tax_totals">
+                                        <t t-set="tax_totals" t-value="o.tax_totals"/>
+                                        <t t-set="currency" t-value="o.currency_id"/>
+                                    </t>
+                                    <div t-if="o.company_id.ei_enable" class="text-end border-top pt-1 mt-1">
+                                        <strong>Total sin retenciones:</strong>
+                                        <span t-field="o.ei_amount_total_no_withholding"
+                                              t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </div>
+                                    <div t-if="o.company_id.ei_enable and o.is_multicurrency"
+                                         class="text-end" style="font-size:0.9em;">
+                                        <strong>Total sin retenciones (<span t-field="o.company_currency_id"/>):</strong>
+                                        <span t-field="o.ei_amount_total_no_withholding_company"
+                                              t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- ═══════════════════════════════════════════════
+                                 SECCIÓN 5 · PIE DE RESOLUCIÓN DIAN
+                            ═══════════════════════════════════════════════ -->
+                            <div t-if="o.company_id.ei_enable"
+                                 class="border-top mt-2 pt-1 text-center"
+                                 style="font-size:0.72em;line-height:1.5;"
+                                 name="ei_footer">
+                                <div t-if="o.company_id.footer_custom_text">
+                                    <span t-field="o.company_id.footer_custom_text"/>
+                                </div>
+                                <div t-if="o.resolution_id and o.ei_uuid">
+                                    <strong t-field="o.resolution_id.resolution_type_document_id.type"/>:
+                                    <span t-field="o.ei_uuid"/>
+                                </div>
+                                <div t-if="o.ei_signature">
+                                    <strong>Firma:</strong> <span t-field="o.ei_signature"/>
+                                </div>
+                                <div t-if="o.resolution_id">
+                                    <t t-if="o.resolution_id.resolution_resolution">
+                                        <strong>Autorización No.:</strong>
+                                        <span t-field="o.resolution_id.resolution_resolution"/>
+                                        <t t-if="o.resolution_id.resolution_resolution_date">
+                                            &#160;<strong>Fecha:</strong>
+                                            <span t-field="o.resolution_id.resolution_resolution_date"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="o.resolution_id.resolution_from">
+                                        &#160;<strong>Rango autorizado:</strong>
+                                        <span t-field="o.resolution_id.resolution_prefix"/>
+                                        <span t-field="o.resolution_id.resolution_from"/>
+                                        <strong> al </strong>
+                                        <span t-field="o.resolution_id.resolution_prefix"/>
+                                        <span t-field="o.resolution_id.resolution_to"/>
+                                    </t>
+                                    <t t-if="o.resolution_id.resolution_date_from">
+                                        &#160;<strong>Válido:</strong>
+                                        <span t-field="o.resolution_id.resolution_date_from"/>
+                                        <strong> al </strong>
+                                        <span t-field="o.resolution_id.resolution_date_to"/>
+                                    </t>
+                                </div>
+                                <div t-if="o.ei_is_valid">
+                                    Representación gráfica de facturación electrónica impresa por computador con software propio por
+                                    <strong t-field="o.company_id.business_name"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
