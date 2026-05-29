@@ -1,0 +1,25 @@
+// Prevents pull-to-refresh on mobile browsers (Chrome Android, Chrome iOS, Safari iOS 16+).
+//
+// Applies overscroll-behavior-y: none at three levels:
+//   1. html, body: covers the document scroll root, applies immediately on CSS parse
+//      before any JS runs (avoids the timing window of the existing o_mobile_overscroll mechanism).
+//   2. .pos-content: Chrome Android tracks this inner overflow:auto container
+//      (pos_app.xml) independently for PTR — must be suppressed directly.
+//   3. .pos *: catches all other overflow-scrollable children (order-container,
+//      product-list, payment panels, etc.) without naming each one.
+//
+// This property does NOT disable normal scrolling — it only prevents overscroll
+// from triggering browser-native actions like pull-to-refresh or back-swipe.
+
+html,
+body {
+    overscroll-behavior-y: none;
+}
+
+.pos-content {
+    overscroll-behavior-y: none;
+}
+
+.pos * {
+    overscroll-behavior-y: none;
+}
