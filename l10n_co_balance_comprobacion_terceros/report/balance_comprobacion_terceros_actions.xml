@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_balance_comprobacion_terceros" model="ir.actions.report">
+        <field name="name">Balance de Comprobacion por Terceros</field>
+        <field name="model">account.balance.comprobacion.terceros.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_co_balance_comprobacion_terceros.bct_report</field>
+        <field name="report_file">l10n_co_balance_comprobacion_terceros.bct_report</field>
+    </record>
+
+</odoo>

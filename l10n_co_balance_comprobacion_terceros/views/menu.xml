@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_balance_comprobacion_terceros"
+              name="Balance de Comprobacion por Terceros"
+              parent="account.menu_finance_reports"
+              action="action_balance_comprobacion_terceros_wizard"
+              sequence="45"
+              groups="account.group_account_user"/>
+
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_balance_comprobacion_terceros_wizard_form" model="ir.ui.view">
+        <field name="name">balance.comprobacion.terceros.wizard.form</field>
+        <field name="model">account.balance.comprobacion.terceros.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Balance de Comprobacion por Terceros">
+                <group col="4">
+                    <field name="target_move" widget="radio"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="only_with_balance_or_movement"/>
+                </group>
+                <group col="4">
+                    <field name="journal_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    <field name="partner_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    <field name="account_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    <field name="company_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_print_pdf" type="object" string="Imprimir" class="btn btn-primary"/>
+                    <button string="Cancelar" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_balance_comprobacion_terceros_wizard" model="ir.actions.act_window">
+        <field name="name">Balance de Comprobacion por Terceros</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.balance.comprobacion.terceros.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_balance_comprobacion_terceros_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
