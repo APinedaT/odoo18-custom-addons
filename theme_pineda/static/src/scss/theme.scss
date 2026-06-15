@@ -1,0 +1,453 @@
+//------------------------------------------------------------------------------
+// Pineda — Frontend theme (industrial look + website_sale styling)
+// Bundle: web.assets_frontend
+//------------------------------------------------------------------------------
+
+:root {
+    // Brand tokens (mirror the design system)
+    --pineda-red: #E00010;
+    --pineda-red-hover: #C00010;
+    --pineda-red-pressed: #98000D;
+    --pineda-yellow: #FFCE00;
+    --pineda-ink: #121212;
+    --pineda-ink-900: #1C1C1E;
+    --pineda-steel: #F0F0F1;
+    --pineda-ink-200: #DEDEDF;
+    --pineda-ink-300: #C2C2C8;
+    --pineda-success: #1F8A3B;
+
+    --pineda-font-display: 'Saira', 'Arial Narrow', sans-serif;
+    --pineda-font-body: 'Barlow', sans-serif;
+    --pineda-font-numeric: 'Saira Condensed', 'Saira', sans-serif;
+
+    --pineda-shadow-sm: 0 1px 3px rgba(18, 18, 18, .12);
+    --pineda-shadow-md: 0 4px 10px rgba(18, 18, 18, .12);
+    --pineda-shadow-hard: 3px 3px 0 var(--pineda-ink);
+
+    --pineda-ease: cubic-bezier(.2, .7, .3, 1);
+}
+
+// Steel-tint page background (design surface-page)
+body {
+    background-color: var(--pineda-steel);
+    font-family: var(--pineda-font-body);
+}
+
+//------------------------------------------------------------------------------
+// Buttons — Saira, uppercase, tactile press
+//------------------------------------------------------------------------------
+.btn {
+    font-family: var(--pineda-font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    transition: background-color .12s var(--pineda-ease),
+                transform .12s var(--pineda-ease),
+                box-shadow .12s var(--pineda-ease);
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+// Yellow hard-hat accent button (black outline, like Button.jsx variant=accent)
+.btn-pineda-accent {
+    background-color: var(--pineda-yellow);
+    color: var(--pineda-ink);
+    border: 2px solid var(--pineda-ink);
+
+    &:hover, &:focus {
+        background-color: #F2BD00;
+        color: var(--pineda-ink);
+    }
+}
+
+// Outlined (secondary) button used on dark sections
+.btn-pineda-outline {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+
+    &:hover, &:focus {
+        background-color: #fff;
+        color: var(--pineda-ink);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Headings — Saira; display variant is uppercase italic (hero/banners only)
+//------------------------------------------------------------------------------
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--pineda-font-display);
+    font-weight: 800;
+}
+
+.o_pineda_display {
+    font-family: var(--pineda-font-display);
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -.01em;
+}
+
+.o_pineda_red { color: var(--pineda-red) !important; }
+.o_pineda_yellow { color: var(--pineda-yellow) !important; }
+
+//------------------------------------------------------------------------------
+// Signature utilities
+//------------------------------------------------------------------------------
+.o_pineda_hard_shadow { box-shadow: var(--pineda-shadow-hard) !important; }
+.o_pineda_outline { border: 3px solid var(--pineda-ink) !important; }
+
+// Diagonal hazard stripe (yellow / ink) — thin edge accent
+.o_pineda_hazard {
+    height: 8px;
+    background: repeating-linear-gradient(45deg,
+        var(--pineda-yellow) 0 22px, var(--pineda-ink) 22px 44px);
+}
+.o_pineda_hazard--redfoot {
+    height: 6px;
+    background: repeating-linear-gradient(45deg,
+        var(--pineda-yellow) 0 22px, var(--pineda-red) 22px 44px);
+}
+
+// Numeric / price text
+.o_pineda_price {
+    font-family: var(--pineda-font-numeric);
+    font-weight: 700;
+    line-height: 1;
+}
+
+//------------------------------------------------------------------------------
+// Header — white bar, thick ink bottom border, red active underline
+//------------------------------------------------------------------------------
+#wrapwrap > header {
+    .navbar, &.o_header_standard .navbar {
+        border-bottom: 3px solid var(--pineda-ink);
+    }
+
+    .navbar-nav .nav-link {
+        font-family: var(--pineda-font-display);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        border-bottom: 3px solid transparent;
+        transition: color .12s var(--pineda-ease), border-color .12s var(--pineda-ease);
+
+        &:hover,
+        &.active {
+            color: var(--pineda-red);
+            border-bottom-color: var(--pineda-red);
+        }
+    }
+}
+
+// Utility bar (optional top strip, used on the homepage header snippet)
+.o_pineda_utilitybar {
+    background: var(--pineda-ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+
+    a { color: #fff; text-decoration: none; }
+    .o_pineda_ub_icon { color: var(--pineda-yellow); }
+}
+
+//------------------------------------------------------------------------------
+// Hero
+//------------------------------------------------------------------------------
+.o_pineda_hero {
+    background: var(--pineda-ink);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    .o_pineda_hero_badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--pineda-red);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 2px;
+        font-family: var(--pineda-font-display);
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+    }
+
+    .o_pineda_stat_num {
+        font-family: var(--pineda-font-numeric);
+        font-weight: 700;
+        font-size: 30px;
+        color: var(--pineda-yellow);
+        line-height: 1;
+    }
+    .o_pineda_stat_label {
+        font-size: 13px;
+        color: rgba(255, 255, 255, .7);
+        margin-top: 4px;
+    }
+
+    .o_pineda_mascot_ring {
+        width: 280px;
+        height: 280px;
+        max-width: 100%;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 40%, rgba(255, 206, 0, .18), transparent 65%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 3px solid var(--pineda-yellow);
+            border-radius: 50%;
+            opacity: .35;
+        }
+        img {
+            width: 220px;
+            max-width: 80%;
+            filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .5));
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Category strip
+//------------------------------------------------------------------------------
+.o_pineda_cat_tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 8px;
+    background: #fff;
+    border: 2px solid var(--pineda-ink-200);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--pineda-ink);
+    transition: border-color .18s var(--pineda-ease), transform .18s var(--pineda-ease);
+
+    &:hover {
+        border-color: var(--pineda-red);
+        transform: translateY(-3px);
+        color: var(--pineda-ink);
+    }
+
+    .o_pineda_cat_icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 4px;
+        background: #FFF8E0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pineda-red);
+    }
+    .o_pineda_cat_name {
+        font-family: var(--pineda-font-body);
+        font-weight: 600;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Product card — Pineda look for the website_sale "Products" dynamic snippet
+//------------------------------------------------------------------------------
+.o_pineda_pcard.card {
+    background: #fff;
+    border: 1px solid var(--pineda-ink-200);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--pineda-shadow-sm);
+    transition: box-shadow .18s var(--pineda-ease), transform .18s var(--pineda-ease);
+
+    &:hover {
+        box-shadow: var(--pineda-shadow-hard);
+        transform: translateY(-2px);
+    }
+
+    .o_pineda_pcard_media {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 4 / 3;
+        background: #F7F7F8;
+        color: var(--pineda-ink-300);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .o_pineda_pcard_cat {
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: var(--pineda-red);
+    }
+    .o_pineda_pcard_name {
+        display: block;
+        font-weight: 600;
+        color: var(--pineda-ink);
+        line-height: 1.2;
+    }
+    .o_pineda_pcard_price {
+        font-family: var(--pineda-font-numeric);
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--pineda-ink);
+        line-height: 1;
+    }
+
+    .o_pineda_stock {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--pineda-success);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        &::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pineda-success);
+        }
+        &.o_pineda_low {
+            color: #E8920C;
+            &::before { background: #E8920C; }
+        }
+        &.o_pineda_out {
+            color: #74747C;
+            &::before { background: #9A9AA2; }
+        }
+    }
+
+    .btn { margin-top: auto; }
+}
+
+
+//------------------------------------------------------------------------------
+// Delivery banner
+//------------------------------------------------------------------------------
+.o_pineda_delivery {
+    background: var(--pineda-red);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    .o_pineda_delivery_stripe {
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        width: 220px;
+        background: repeating-linear-gradient(45deg,
+            rgba(0, 0, 0, .18) 0 18px, transparent 18px 36px);
+    }
+    .o_pineda_delivery_icon {
+        width: 76px;
+        height: 76px;
+        border-radius: 6px;
+        background: var(--pineda-yellow);
+        border: 3px solid var(--pineda-ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--pineda-ink);
+    }
+}
+
+//------------------------------------------------------------------------------
+// Service features
+//------------------------------------------------------------------------------
+.o_pineda_feature {
+    background: #fff;
+    border: 1px solid var(--pineda-ink-200);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: var(--pineda-shadow-sm);
+    height: 100%;
+
+    .o_pineda_feature_icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 4px;
+        background: var(--pineda-ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pineda-yellow);
+        margin-bottom: 16px;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Footer — ink with hazard stripe top
+//------------------------------------------------------------------------------
+#wrapwrap > footer {
+    position: relative;
+
+    &::before {
+        content: "";
+        display: block;
+        height: 6px;
+        background: repeating-linear-gradient(45deg,
+            var(--pineda-yellow) 0 22px, var(--pineda-red) 22px 44px);
+    }
+
+    h4, h5, .h4, .h5 {
+        text-transform: uppercase;
+        letter-spacing: .06em;
+    }
+}
+
+//------------------------------------------------------------------------------
+// eCommerce — /shop product grid, cards, add-to-cart (website_sale)
+//------------------------------------------------------------------------------
+.o_wsale_products_page, #products_grid {
+    .oe_product .oe_product_cart, .o_wsale_product_grid_wrapper {
+        border: 1px solid var(--pineda-ink-200);
+        border-radius: 10px;
+        transition: box-shadow .18s var(--pineda-ease), transform .18s var(--pineda-ease);
+
+        &:hover {
+            box-shadow: var(--pineda-shadow-hard);
+            transform: translateY(-2px);
+        }
+    }
+
+    .o_wsale_product_information .product_price .oe_currency_value,
+    .product_price .oe_currency_value {
+        font-family: var(--pineda-font-numeric);
+        font-weight: 700;
+    }
+
+    .o_wsale_product_information h6 a,
+    .o_wsale_products_item_title {
+        font-family: var(--pineda-font-body);
+        font-weight: 600;
+        color: var(--pineda-ink);
+    }
+}
+
+// Add to cart / shop primary actions
+#products_grid .btn-primary,
+#product_detail .btn-primary,
+.js_add_cart_json + *,
+a.btn-primary[href*="shop"] {
+    text-transform: uppercase;
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- ========================================================================
+     Pineda product card — a "Template" choice for the website_sale "Products"
+     dynamic snippet. Pulls real catalog data from the database (image, name,
+     category, price, stock, add-to-cart) and renders it with the Pineda
+     storefront styling. Once the Products snippet is dropped on a page, pick
+     this template and a Category filter to show that category's listing.
+     `qty_available` is read via record.sudo() because the public user has no
+     direct ACL on stock models (mirrors website_sale_stock's own pattern).
+     ==================================================================== -->
+<template id="dynamic_filter_template_product_product_pineda_card" name="Pineda — Card">
+    <t t-foreach="records" t-as="data" data-thumb="/theme_pineda/static/src/img/mascot.png">
+        <t t-set="record" t-value="data['_record']"/>
+        <t t-set="product_template_id" t-value="record.id if not record.is_product_variant else record.product_tmpl_id.id"/>
+        <t t-set="product_id" t-value="record.id if record.is_product_variant else record.product_variant_id.id"/>
+        <div class="o_carousel_product_card card o_pineda_pcard h-100 w-100" t-att-data-add2cart-rerender="data.get('_add2cart_rerender')">
+            <div t-if="is_sample" class="h5 o_ribbon_right bg-primary text-uppercase">Muestra</div>
+            <a class="o_pineda_pcard_media o_dynamic_product_hovered overflow-hidden text-decoration-none" t-att-href="record.website_url">
+                <img t-if="data.get('image_512')" class="card-img-top o_img_product_cover" loading="lazy"
+                     t-att-src="data['image_512']" t-att-alt="data.get('display_name')"/>
+                <i t-else="" data-lucide="package" style="width:56px;height:56px;stroke-width:1.5;"/>
+            </a>
+            <div class="card-body d-flex flex-column gap-2 p-3">
+                <span t-if="record.categ_id" class="o_pineda_pcard_cat" t-esc="record.categ_id.name"/>
+                <a t-att-href="record.website_url" class="text-decoration-none">
+                    <span class="o_pineda_pcard_name" t-out="data.get('display_name')"/>
+                </a>
+                <div class="o_pineda_pcard_price mt-1">
+                    <t t-call="website_sale.price_dynamic_filter_template_product_product"/>
+                </div>
+                <t t-if="'qty_available' in record._fields">
+                    <t t-set="qty" t-value="record.sudo().qty_available"/>
+                    <span t-if="qty &gt; 5" class="o_pineda_stock">En existencia</span>
+                    <span t-elif="qty &gt; 0" class="o_pineda_stock o_pineda_low">Pocas unidades</span>
+                    <span t-else="" class="o_pineda_stock o_pineda_out">Agotado</span>
+                </t>
+                <div class="o_dynamic_snippet_btn_wrapper mt-2" t-if="record._website_show_quick_add()">
+                    <button type="button" role="button" class="btn btn-primary w-100 js_add_cart"
+                            title="Agregar al carrito"
+                            t-att-data-product-id="product_id"
+                            t-att-data-product-template-id="product_template_id"
+                            t-att-data-product-selected="record.is_product_variant"
+                            t-att-data-is-combo="record.type == 'combo'">
+                        <i data-lucide="shopping-cart" style="width:16px;height:16px;"/> Agregar
+                    </button>
+                </div>
+                <a t-else="" t-att-href="record.website_url" class="btn btn-secondary w-100 mt-2">Ver producto</a>
+            </div>
+        </div>
+    </t>
+</template>
+
+<!-- Default data source for the Pineda card: newest published products.
+     Exposed as "Pineda · Productos" in the snippet's Data Source picker. -->
+<record id="dynamic_filter_pineda_products" model="website.snippet.filter">
+    <field name="filter_id" ref="website_sale.dynamic_snippet_newest_products_filter"/>
+    <field name="field_names">display_name,default_code,image_512</field>
+    <field name="limit" eval="16"/>
+    <field name="name">Pineda · Productos</field>
+</record>
+
+</odoo>

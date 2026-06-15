@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Snippet definitions (drag-and-drop website building blocks)
+         ============================================================ -->
+
+    <!-- HERO -->
+    <template id="s_pineda_hero" name="Pineda — Hero">
+        <section class="s_pineda_hero o_pineda_hero" data-snippet="s_pineda_hero" data-name="Pineda Hero">
+            <div class="o_pineda_hazard"/>
+            <div class="container" style="padding-top: 64px; padding-bottom: 64px;">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <span class="o_pineda_hero_badge">
+                            <i data-lucide="hard-hat" style="width:16px;height:16px;"/>
+                            Materiales · Construcción · Cerrajería
+                        </span>
+                        <h1 class="o_pineda_display text-white mt-4 mb-0" style="font-size:60px;">
+                            Todo para tu <span class="o_pineda_red">obra</span><br/>
+                            y tu <span class="o_pineda_yellow">cerrajería</span>
+                        </h1>
+                        <p class="mt-4 mb-0" style="font-size:19px;line-height:1.55;color:rgba(255,255,255,.82);max-width:560px;">
+                            Surtimos materiales de construcción y cerrajería con entrega
+                            directa en obra. Especialistas en conjuntos residenciales.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 mt-4">
+                            <a href="/shop" class="btn btn-pineda-accent btn-lg">
+                                <i data-lucide="layout-grid" style="width:18px;height:18px;"/>
+                                Ver catálogo
+                            </a>
+                            <a href="/contactus" class="btn btn-pineda-outline btn-lg">
+                                <i data-lucide="file-text" style="width:18px;height:18px;"/>
+                                Pedir cotización
+                            </a>
+                        </div>
+                        <div class="d-flex flex-wrap gap-5 mt-5">
+                            <div>
+                                <div class="o_pineda_stat_num">2.500+</div>
+                                <div class="o_pineda_stat_label">Productos</div>
+                            </div>
+                            <div>
+                                <div class="o_pineda_stat_num">24h</div>
+                                <div class="o_pineda_stat_label">Cerrajería</div>
+                            </div>
+                            <div>
+                                <div class="o_pineda_stat_num">+15</div>
+                                <div class="o_pineda_stat_label">Años de experiencia</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="d-flex justify-content-center">
+                            <div class="o_pineda_mascot_ring">
+                                <img src="/theme_pineda/static/src/img/mascot.png" class="img-fluid" alt="Mascota Pineda"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- CATEGORÍAS -->
+    <template id="s_pineda_categories" name="Pineda — Categorías">
+        <section class="s_pineda_categories" data-snippet="s_pineda_categories" data-name="Pineda Categorías">
+            <div class="container" style="padding-top: 40px; padding-bottom: 8px;">
+                <div class="d-flex align-items-baseline justify-content-between mb-4">
+                    <h2 class="m-0" style="font-size:30px;">Categorías</h2>
+                    <span class="text-muted small">Encuentra lo que tu obra necesita</span>
+                </div>
+                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-8 g-3">
+                    <t t-foreach="[
+                            ('Construcción', 'bricks'), ('Cerrajería', 'key-round'),
+                            ('Herramienta', 'hammer'), ('Eléctricos', 'plug-zap'),
+                            ('Plomería', 'wrench'), ('Seguridad', 'shield-check'),
+                            ('Pinturas', 'paint-roller'), ('Ferretería', 'bolt')]" t-as="cat">
+                        <div class="col">
+                            <a href="/shop" class="o_pineda_cat_tile h-100">
+                                <span class="o_pineda_cat_icon">
+                                    <i t-att-data-lucide="cat[1]" style="width:24px;height:24px;"/>
+                                </span>
+                                <span class="o_pineda_cat_name" t-esc="cat[0]"/>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- BANNER DE ENTREGA -->
+    <template id="s_pineda_delivery" name="Pineda — Banner entrega">
+        <section id="entregas" class="s_pineda_delivery o_pineda_delivery" data-snippet="s_pineda_delivery" data-name="Pineda Entrega">
+            <div class="o_pineda_delivery_stripe"/>
+            <div class="container position-relative" style="padding-top:44px;padding-bottom:44px;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
+                    <span class="o_pineda_delivery_icon">
+                        <i data-lucide="truck" style="width:38px;height:38px;"/>
+                    </span>
+                    <div class="flex-grow-1">
+                        <h2 class="o_pineda_display text-white m-0" style="font-size:34px;">Entregamos directo en tu obra</h2>
+                        <p class="mb-0 mt-2" style="font-size:17px;color:rgba(255,255,255,.9);max-width:620px;">
+                            Programa tu pedido y recibe los materiales en el conjunto
+                            residencial. Despacho propio, sin que pares la cuadrilla.
+                        </p>
+                    </div>
+                    <a href="/contactus" class="btn btn-pineda-accent btn-lg flex-shrink-0">
+                        <i data-lucide="calendar-clock" style="width:18px;height:18px;"/>
+                        Programar entrega
+                    </a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- SERVICIOS / FEATURES -->
+    <template id="s_pineda_services" name="Pineda — Servicios">
+        <section id="servicios" class="s_pineda_services" data-snippet="s_pineda_services" data-name="Pineda Servicios">
+            <div class="container" style="padding-top:56px;padding-bottom:56px;">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    <t t-foreach="[
+                            ('truck','Entrega en obra','Despacho a conjuntos residenciales y obras.'),
+                            ('key-round','Cerrajería 24h','Apertura, cambio e instalación de cerraduras.'),
+                            ('badge-percent','Precios por volumen','Tarifas especiales para constructoras.'),
+                            ('headset','Asesoría técnica','Te ayudamos a calcular cantidades.')]" t-as="f">
+                        <div class="col">
+                            <div class="o_pineda_feature">
+                                <span class="o_pineda_feature_icon">
+                                    <i t-att-data-lucide="f[0]" style="width:26px;height:26px;"/>
+                                </span>
+                                <h3 class="m-0 mb-2" style="font-size:19px;" t-esc="f[1]"/>
+                                <p class="m-0 text-muted small" t-esc="f[2]"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- ============================================================
+         Register the snippets in the website editor "Blocks" panel
+         under a dedicated "Pineda" group.
+         ============================================================ -->
+    <template id="pineda_snippets" inherit_id="website.snippets" name="Pineda Snippets">
+        <xpath expr="//snippets[@id='snippet_groups']" position="inside">
+            <t snippet-group="pineda" t-snippet="website.s_snippet_group" string="Pineda"
+               t-thumbnail="/theme_pineda/static/src/img/mascot.png"/>
+        </xpath>
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <t t-snippet="theme_pineda.s_pineda_hero" string="Pineda — Hero" group="pineda">
+                <keywords>hero, obra, cerrajería, mascota, banner, portada, inicio</keywords>
+            </t>
+            <t t-snippet="theme_pineda.s_pineda_categories" string="Pineda — Categorías" group="pineda">
+                <keywords>categorías, productos, iconos, grid, navegación</keywords>
+            </t>
+            <t t-snippet="theme_pineda.s_pineda_delivery" string="Pineda — Entrega" group="pineda">
+                <keywords>entrega, obra, banner, llamada a la acción, cta, despacho</keywords>
+            </t>
+            <t t-snippet="theme_pineda.s_pineda_services" string="Pineda — Servicios" group="pineda">
+                <keywords>servicios, features, beneficios, columnas, ventajas</keywords>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

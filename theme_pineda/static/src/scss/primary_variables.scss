@@ -1,0 +1,78 @@
+//------------------------------------------------------------------------------
+// Pineda — Primary variables (brand palette, fonts, buttons)
+// Bundle: web._assets_primary_variables
+// Loaded after `website` so these values win over Odoo defaults.
+//------------------------------------------------------------------------------
+
+// --- Fonts -------------------------------------------------------------------
+// Substitutions (no brand font files provided): Saira (display), Barlow (body),
+// Saira Condensed (prices/numeric). Loaded from Google Fonts.
+$o-theme-font-configs: map-merge($o-theme-font-configs, (
+    'Saira': (
+        'family': ('Saira', 'Arial Narrow', sans-serif),
+        'url': 'Saira:300,400,500,600,700,800,900,700i,800i,900i',
+    ),
+    'Saira Condensed': (
+        'family': ('Saira Condensed', 'Saira', sans-serif),
+        'url': 'Saira+Condensed:400,500,600,700,800',
+    ),
+    'Barlow': (
+        'family': ('Barlow', sans-serif),
+        'url': 'Barlow:300,400,400i,500,600,600i,700',
+    ),
+));
+
+// --- Brand color palette -----------------------------------------------------
+// o-color-1 red (primary)  ·  o-color-2 ink (dark sections/footer)
+// o-color-3 hard-hat yellow (accent)  ·  o-color-4 white (surfaces)
+// o-color-5 ink (deep dark)
+$o-color-palettes: map-merge($o-color-palettes, (
+    'pineda': o-make-palette(#E00010, #121212, (
+        'o-color-3': #FFCE00,
+        'o-color-4': #FFFFFF,
+        'o-color-5': #1C1C1E,
+        // Color-combination assignments for site zones
+        'menu': 1,    // white header (o_cc1)
+        'footer': 2,  // ink footer  (o_cc2)
+        'copyright': 2,
+    )),
+));
+
+// Offer the Pineda palette first in the website editor.
+$o-selected-color-palettes-names: join(('pineda',), $o-selected-color-palettes-names);
+
+// --- Website values (active fonts, button shape, heading sizes) --------------
+$o-website-values-palettes: (
+    (
+        'color-palettes-name': 'pineda',
+
+        // Typography
+        'font': 'Barlow',
+        'headings-font': 'Saira',
+        'navbar-font': 'Saira',
+        'buttons-font': 'Saira',
+        // Saira Condensed is used only for prices/numerics (via --pineda-font-numeric
+        // in theme.scss). Bind it to the otherwise-unused `display-4` alias so Odoo
+        // emits its Google Fonts @import. Do NOT use the `google-fonts` website value:
+        // it is printed as an editor CSS variable and a single-item list breaks it.
+        'display-4-font': 'Saira Condensed',
+
+        // Heading scale (Saira)
+        'h1-font-size': 2.5rem,
+        'h2-font-size': 2rem,
+        'h3-font-size': 1.5rem,
+        'h4-font-size': 1.25rem,
+
+        // Buttons — squared/industrial, uppercase handled in theme.scss
+        'btn-border-radius': 4px,
+        'btn-border-radius-lg': 4px,
+        'btn-border-radius-sm': 2px,
+        'btn-border-width': 2px,
+        'btn-padding-y': .6rem,
+        'btn-padding-x': 1.25rem,
+        'btn-padding-y-sm': .35rem,
+        'btn-padding-x-sm': .85rem,
+        'btn-padding-y-lg': .95rem,
+        'btn-padding-x-lg': 1.75rem,
+    ),
+);
