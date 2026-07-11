@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_resolution_alert" model="mail.template">
+            <field name="name">Alerta de resolución DIAN por vencer</field>
+            <field name="model_id" ref="base.model_res_company"/>
+            <field name="subject">Alerta: Resoluciones DIAN próximas a vencer - {{ object.name }}</field>
+            <field name="email_from">{{ (object.partner_id.email_formatted or '') }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+    <p>Estimado/a <t t-out="ctx.get('alert_user') and ctx['alert_user'].name or 'Usuario'">Usuario</t>,</p>
+    <p>Las siguientes resoluciones DIAN requieren su atención para la empresa
+       <strong t-out="object.name or ''">Empresa</strong>:</p>
+
+    <t t-if="ctx.get('expiring_date')">
+        <h3 style="color: #e74c3c;">Resoluciones próximas a vencer por fecha:</h3>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <thead style="background-color: #f8f9fa;">
+                <tr>
+                    <th>Resolución</th>
+                    <th>Prefijo</th>
+                    <th>Fecha de vencimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="ctx.get('expiring_date', [])" t-as="res">
+                    <tr>
+                        <td t-out="res.name or ''">Resolución</td>
+                        <td t-out="res.resolution_prefix or ''">Prefijo</td>
+                        <td t-out="res.resolution_date_to">Fecha</td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+
+    <t t-if="ctx.get('expiring_number')">
+        <h3 style="color: #e67e22;">Resoluciones con rango numérico próximo a agotarse:</h3>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <thead style="background-color: #f8f9fa;">
+                <tr>
+                    <th>Resolución</th>
+                    <th>Prefijo</th>
+                    <th>Consecutivo actual</th>
+                    <th>Límite</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="ctx.get('expiring_number', [])" t-as="res">
+                    <tr>
+                        <td t-out="res.name or ''">Resolución</td>
+                        <td t-out="res.resolution_prefix or ''">Prefijo</td>
+                        <td t-out="res.resolution_next_consecutive or ''">Actual</td>
+                        <td t-out="res.resolution_to">Límite</td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+
+    <p style="margin-top: 16px;">Por favor tome las acciones necesarias para renovar o solicitar
+       nuevas resoluciones ante la DIAN.</p>
+</div>
+            </field>
+        </record>
+
+        <record id="mail_template_draft_invoice_alert" model="mail.template">
+            <field name="name">Alerta de facturas borrador pendientes</field>
+            <field name="model_id" ref="base.model_res_company"/>
+            <field name="subject">Alerta: Facturas borrador pendientes de validación - {{ object.name }}</field>
+            <field name="email_from">{{ (object.partner_id.email_formatted or '') }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+    <p>Estimado/a <t t-out="ctx.get('alert_user') and ctx['alert_user'].name or 'Usuario'">Usuario</t>,</p>
+    <p>Hay <strong t-out="ctx.get('draft_invoices') and len(ctx['draft_invoices']) or 0">0</strong> factura(s)
+       en estado borrador que llevan más de
+       <strong t-out="ctx.get('days_threshold', 0)">2</strong> día(s)
+       sin ser validadas para la empresa
+       <strong t-out="object.name or ''">Empresa</strong>.</p>
+    <p>Por favor ingrese al sistema para revisar y validar las facturas pendientes.</p>
+</div>
+            </field>
+        </record>
+    </data>
+</odoo>

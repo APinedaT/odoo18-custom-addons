@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_dian_alerts" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.pi_dian_alerts</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_co_edi_jorels.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='l10n_co_edi_jorels']" position="inside">
+                <h2>Configuración de Alertas DIAN</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Vencimiento por fecha</span>
+                            <div class="text-muted">
+                                Alertar cuando una resolución venza dentro de esta cantidad de días
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="dian_alert_days_before_expiry"
+                                           class="col-lg-4 o_light_label"/>
+                                    <field name="dian_alert_days_before_expiry"/>
+                                    <span class="ms-2">días</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Uso del rango numérico</span>
+                            <div class="text-muted">
+                                Alertar cuando el rango numérico se haya usado más allá de este porcentaje
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="dian_alert_number_percentage"
+                                           class="col-lg-4 o_light_label"/>
+                                    <field name="dian_alert_number_percentage"/>
+                                    <span class="ms-2">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Facturas borrador</span>
+                            <div class="text-muted">
+                                Alertar sobre facturas en borrador con más de esta cantidad de días (0 = alertar todas)
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="dian_alert_draft_invoice_days"
+                                           class="col-lg-4 o_light_label"/>
+                                    <field name="dian_alert_draft_invoice_days"/>
+                                    <span class="ms-2">días</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Destinatarios de alertas</span>
+                            <div class="text-muted">
+                                Usuarios que recibirán las notificaciones. Si está vacío, se usa el grupo de Gerente de Facturación Electrónica.
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="dian_alert_user_ids"
+                                           class="col-lg-4 o_light_label"/>
+                                    <field name="dian_alert_user_ids"
+                                           widget="many2many_tags"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

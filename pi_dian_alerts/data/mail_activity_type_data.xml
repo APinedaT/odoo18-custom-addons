@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_act_resolution_expiring" model="mail.activity.type">
+            <field name="name">Resolución DIAN por vencer</field>
+            <field name="icon">fa-exclamation-triangle</field>
+            <field name="res_model">account.move</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="mail_act_draft_invoice_reminder" model="mail.activity.type">
+            <field name="name">Factura borrador pendiente</field>
+            <field name="icon">fa-file-text-o</field>
+            <field name="res_model">account.move</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">91</field>
+        </record>
+    </data>
+</odoo>
